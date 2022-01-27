@@ -7,7 +7,7 @@
 '''
 key에 존재하지 않으면 leaf로 하여 count하였더니 맞았다.
 '''
-
+'''
 import sys
 import collections
 read = sys.stdin.readline
@@ -56,6 +56,51 @@ else:
     for i in range(len(relation)):
         if relation[i] != None: # << i번째 node는 실존하면.
             if i not in keys:
+                cnt += 1
+
+    print(cnt)
+'''
+
+import sys
+import collections
+read = sys.stdin.readline
+
+nodes = int(read())
+relation = list(map(int, read().split()))
+dele = int(read())
+root = relation.index(-1)
+
+def to_delete(node):
+        stack = [node]
+        to_del = [node]
+        while stack:
+            now = stack.pop()
+            for i in graph[now]:
+                if i in to_del:
+                    continue
+                else:
+                    to_del.append(i)
+                    stack.append(i)
+        return to_del
+
+if dele == root:
+    print(0)
+
+else:
+    graph = collections.defaultdict(list)
+    for i in range(len(relation)):
+        graph[relation[i]].append(i) # 부모 : 자식
+    del graph[-1]
+
+    to_del = to_delete(dele)
+    cnt = 0
+
+    for i in to_del:
+        relation[i] = None
+    
+    for i in range(len(relation)): # 이 부분 수정
+        if relation[i] != None:
+            if i not in relation:
                 cnt += 1
 
     print(cnt)
