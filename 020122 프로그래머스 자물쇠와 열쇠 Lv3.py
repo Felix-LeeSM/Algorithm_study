@@ -14,8 +14,7 @@ def solution(key, lock):
     lk, ll = len(key), len(lock)
     gap = ll - lk
     holes = list()
-    up = list()
-    ro = 0
+    keys = list()
     for i in range(ll): # 채워줄 것들
         for j in range(ll):
             if lock[i][j] == 0:
@@ -24,18 +23,18 @@ def solution(key, lock):
     for i in range(lk): # 채울 것들
         for j in range(lk):
             if key[i][j] == 1:
-                up.append((i, j))
+                keys.append((i, j))
 
     for _ in range(4): # 4번 회전
         for g in range(0, gap+1): # 만지작 만지작
-            check = [(i[0]+g, i[1]+g) for i in up]
+            check = [(i[0]+g, i[1]+g) for i in keys]
             for c in holes:
                 if c not in check: # 못 채워주면
                     break
             else:
                 return True
 
-        up = [(i[1], lk -i[0] -1) for i in up] # x, y >> y, n-1-x [2][0] > [0][0]
+        keys = [(i[1], lk -i[0] -1) for i in keys] # x, y >> y, n-1-x [2][0] > [0][0]
     return False
 print(solution([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
 
