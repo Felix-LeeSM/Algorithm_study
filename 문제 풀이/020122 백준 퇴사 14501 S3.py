@@ -1,21 +1,27 @@
+# 이 날 일을 한다, 안 한다로 나뉜다.
+# knapsack과는 비슷한듯 다르다.
+
 import sys
+sys.setrecursionlimit = 10000
 read = sys.stdin.readline
 
 days = int(read())
-works = [tuple(map(int, read().split())) for _ in range(days)]
-works = list(enumerate([0] + works))
-
-def dp_work(date, money):
-    if date >= days:
-        return money if works[-1][1][0] > 1 else money + works[-1][1][1]
-    else:
-        if date + works[date][1][0] > days + 1:
-            return dp_work(date+1, money)
+works = [-1]
+for i in range(1, days+1):
+    works.append(tuple(map(int, read().split())))
+    # 시간, 돈 순서
+def new_one(date, money):
+    if date > days:
+        return money
+    elif date == days:
+        if works[date][0] == 1:
+            return money + works[date][1]
         else:
-            return max(dp_work(date + 1, money), dp_work(date + works[date][1][0], money + works[date][1][1]))
+            return money
+    else:
+        if date + works[date][0] -1 > days:
+            return new_one(date+1, money)
+        else:
+            return max(new_one(date+1, money), new_one(date+works[date][0], money+works[date][1]))
 
-
-def newone(date, money):
-    
-
-print(dp_work(1, 0))
+print(new_one(1, 0))
