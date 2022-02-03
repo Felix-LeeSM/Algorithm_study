@@ -211,49 +211,29 @@ class LinkedList_:
 '''
 
 
-def solution(n, k, cmd):
-    ans = ['O']*n
-    cur = k
-    dele = []
-    for i in range(len(cmd)):
-        i = cmd[i].split()
-        if i[0] == 'U':
-            par = int(i[1])
-            while par > 0:
-                cur -= 1
-                if ans[cur] == 'O':
-                    par -= 1
-
-        elif i[0] == 'D':
-            par = int(i[1])
-            while par > 0:
-                cur += 1
-                if ans[cur] == 'O':
-                    par -= 1
-
-        elif i[0] == 'C':
-            ans[cur] = 'X'
-            dele.append(cur)
-            par = 1
-            if 'O' in ans[cur:]:
-                while par > 0:
-                    cur += 1
-                    if ans[cur] == 'O':
-                        par -= 1
-            else:
-                while par > 0:
-                    cur -= 1
-                    if ans[cur] == 'O':
-                        par -= 1
-
-        else:  # 되돌리기
-            idx = dele.pop()
-            ans[idx] = 'O'
-
+'''
+import heapq
+def solution(scoville, K):
+    tries = 0
+    heapq.heapify(scoville)
+    length = len(scoville)
+    while length >= 2:
+        a, b = heapq.heappop(scoville), heapq.heappop(scoville)
+        length -= 2
+        if a < K:
+            c = a + 2*b
+            tries += 1
+            if c < K:
+                heapq.heappush(scoville, c)
+                length += 1
+        else:
+            return tries
     else:
-        return ''.join(ans)
+        if min(scoville) >= K:
+            return tries
+        else:
+            return -1
+            
 
-
-print(solution(8, 2, ["D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z"]))
-print(solution(8, 2, ["D 2", "C", "U 3", "C",
-      "D 4", "C", "U 2", "Z", "Z", "U 1", "C"]))
+solution([1, 2, 3, 9, 10, 12], 1)
+'''

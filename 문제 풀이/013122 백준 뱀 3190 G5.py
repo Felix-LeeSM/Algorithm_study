@@ -48,6 +48,7 @@ for _ in range(L):
     each = read().rstrip().split()
     moves.append((int(each[0]), each[1]))
 
+
 def dummy(moves, apps, n):
     now = 0
     body = collections.deque([(0, 0)])
@@ -59,12 +60,12 @@ def dummy(moves, apps, n):
         head = body[-1]
         # 시간이 지남!
         new_head = (head[0]+vector[dir][0], head[1]+vector[dir][1])
-        if new_head in body or not(0<=new_head[0]<n and 0<= new_head[1]<n):
+        if new_head in body or not(0 <= new_head[0] < n and 0 <= new_head[1] < n):
             return now
         body.append(new_head)
         if new_head in apps:
             del apps[apps.index(new_head)]
-        else :
+        else:
             body.popleft()
         if cursor < len(moves):
             if moves[cursor][0] == now:
@@ -75,5 +76,6 @@ def dummy(moves, apps, n):
                     dir -= 1
                     dir %= 4
                 cursor += 1
+
 
 print(dummy(moves, apples, N))
