@@ -82,9 +82,6 @@ class my_list:
                 else:
                     break
 
-
-import collections
-
 def solution(arrows):
     x, y = 0, 0
     dx = (0, 1, 1, 1, 0, -1, -1, -1)
@@ -125,8 +122,6 @@ def destination(n, moves):
     return (x, y)
 
 print(destination(int(input()), input().split()))
-
-
 '''
 '''
 class Node_:
@@ -207,10 +202,7 @@ class LinkedList_:
             node = node.next
 
         return -1
-
 '''
-
-
 '''
 import heapq
 def solution(scoville, K):
@@ -234,6 +226,10 @@ def solution(scoville, K):
         else:
             return -1
             
-
 solution([1, 2, 3, 9, 10, 12], 1)
 '''
+
+
+# 계산 과정 문제인듯?
+print(solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN",
+                                      "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"]))
