@@ -228,8 +228,18 @@ def solution(scoville, K):
             
 solution([1, 2, 3, 9, 10, 12], 1)
 '''
+import sys
+read = sys.stdin.readline
+row, col = map(int, read().split())
+arr = [list(map(int, list(read().strip()))) for _ in range(row)]
 
 
-# 계산 과정 문제인듯?
-print(solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN",
-                                      "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"]))
+def solution(arr, row, col):
+    for side in range(min(row, col)-1, -1, -1):
+        for i in range(row-side):
+            for j in range(col-side):
+                if arr[i][j] == arr[i+side][j] == arr[i][j+side] == arr[i+side][j+side]:
+                    return (side+1)**2
+
+
+print(solution(arr, row, col))
