@@ -60,3 +60,29 @@ def bisect_left(a, x, lo=0, hi=None):
 
 # 위의 try except 구문을 통해 C로 구현된 module을 import하고, 이에 실패한 경우,
 # python으로 구현한 함수를 통해 진행되는 것으로 보인다.
+
+
+n, c = map(int, input().split())
+locations = [int(input()) for _ in range(n)]
+locations.sort()
+
+
+def binary_search(start, end):  # start, end 간격에 대한 개념이고
+    if start > end:
+        return end
+    mid = (start+end) // 2  # 간격
+
+    now = locations[0]
+    count = 1
+    for location in locations[1:]:
+        if location - now >= mid:
+            count += 1
+            now = location
+    if count >= c:
+        start = mid + 1
+    else:
+        end = mid - 1
+    return binary_search(start, end)
+
+
+print(binary_search(1, locations[-1] - locations[0]))
