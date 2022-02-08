@@ -24,7 +24,7 @@ def solution(key, lock):
                 up.append((i, j))
 
     for _ in range(4):  # 4번 회전
-        for g1 in range(-ll+1, ll):  # 회전이동
+        for g1 in range(-ll+1, ll):  # 평행이동
             for g2 in range(-ll+1, ll):
                 check = [(i[0]+g1, i[1]+g2) for i in up]  # 움직여준 key
                 for c in holes:
