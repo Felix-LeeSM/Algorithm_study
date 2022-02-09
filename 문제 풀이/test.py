@@ -258,3 +258,18 @@ solution([1, 2, 3, 9, 10, 12], 1)
 20 3 14 6 7 8 18 10 12 15
 출력 : 7
 '''
+
+
+
+
+from typing import List
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        ret = [0]*len(nums)
+        ret[0] = nums[0]
+        if len(nums) == 1:
+            return ret[0]
+        ret[1] = max(nums[0], nums[1])
+        for idx in range(2, len(nums)):
+            ret[idx] = max(ret[idx-2]+nums[idx], ret[idx-1])
+        return max(ret[-2:])

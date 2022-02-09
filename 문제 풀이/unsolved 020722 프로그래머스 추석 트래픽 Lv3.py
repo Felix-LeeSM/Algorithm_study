@@ -44,31 +44,24 @@ def solution(logs):
             log.split()[-1][:-1]) * 1000)
         time = dt.datetime.strptime(
             time, '%Y-%m-%d %H:%M:%S.%f').timestamp() * 1000
-        left, right = time, time + takes - 1
+        left, right = time - takes + 1, time
         processes.append((left, right))
 
     maximum = 0
-
     for each in range(len(processes)):
         cnt = 0
-        process = processes[each]
-        start, end = process
-        for check in range(len(processes)):
+        st_p, en_p = processes[each]
+        for check in range(each, len(processes)):
             check_s, check_e = processes[check]
-            if check_e < start:
-                continue
-            if check_s > end + 1000:
-                break
-            if end <= check_e <= end + 1000 or end <= check_s <= end + 1000:
+            if en_p <= check_e <= en_p + 1000 or en_p <= check_s <= en_p + 1000 or (check_s <= st_p and en_p <= check_e):
                 cnt += 1
-
         maximum = max(maximum, cnt)
-    print(maximum)
+
     return maximum
 
 
 # 뽑아놨는데, 어떻게 할까...
-solution([
+print(solution([
     "2016-09-15 20:59:57.421 0.351s",
     "2016-09-15 20:59:58.233 1.181s",
     "2016-09-15 20:59:58.299 0.8s",
@@ -79,4 +72,4 @@ solution([
     "2016-09-15 21:00:00.748 2.31s",
     "2016-09-15 21:00:00.966 0.381s",
     "2016-09-15 21:00:02.066 2.62s"
-])
+]))

@@ -7,27 +7,33 @@ N, W = map(int, read().split())
 luggages = [0]
 for _ in range(N):
     luggages.append(tuple(map(int, read().split())))
+
+
 def solution(n, w, loads):
     board = [[0]*(w+1) for _ in range(n+1)]
     for j in range(1, n+1):
         for i in range(1, w+1):
             if i >= loads[j][0]:
-                board[j][i] = max(board[j-1][i], board[j-1][i-loads[j][0]]+loads[j][1])
+                board[j][i] = max(board[j-1][i], board[j-1]
+                                  [i-loads[j][0]]+loads[j][1])
             else:
                 board[j][i] = board[j-1][i]
     return board[n][w]
+
+
 print(solution(N, W, luggages))
 
 # 메모리를 덜 쓰는 방법
 # 한 줄 한 줄만 구현하여 메모리를 덜 소모한다.
 # 시간은 많이 줄었는데, 메모리는 큰 차이가 없다.
 
-import sys
 read = sys.stdin.readline
 N, W = map(int, read().split())
 luggages = []
 for _ in range(N):
     luggages.append(tuple(map(int, read().split())))
+
+
 def solution(n, w, loads):
     board = [0]*(w+1)
     cache = [0]*(w+1)
@@ -40,6 +46,8 @@ def solution(n, w, loads):
         board = cache
         cache = [0]*(w+1)
     return board[w]
+
+
 print(solution(N, W, luggages))
 
 '''
