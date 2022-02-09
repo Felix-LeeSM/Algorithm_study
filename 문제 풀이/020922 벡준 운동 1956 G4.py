@@ -29,9 +29,37 @@ a번 마을에서 b번 마을로 가는 거리가 c인 도로가 있다는 의�
 예제 출력 1 
 3
 '''
-import sys
-import collections
+# 인터넷을 참조한 플로이드 워셜 알고리즘 이용 풀이
+# https://tooo1.tistory.com/312
+# python3으로 제출 시, 시간 초과.
+# pypy3으로 제출하여야 성공할 수 있다.
 
+import sys
+INF = sys.maxsize
+
+nodes, edges = map(int, sys.stdin.readline().split())
+board = [[INF]*(nodes+1) for _ in range(nodes+1)]
+
+for _ in range(edges):
+    dep, arr, cost = map(int, sys.stdin.readline().split())
+    board[dep][arr] = cost
+for v in range(1, nodes+1):  # 거쳐가는 노드
+    for s in range(1, nodes+1):  # 시작하는 노드
+        for e in range(1, nodes+1):  # 도착하느 노드
+            board[s][e] = min(board[s][e], board[s][v] + board[v][e])
+inter = INF
+for i in range(1, nodes+1):
+    inter = min(inter, board[i][i])
+if inter == INF:
+    print(-1)
+else:
+    print(inter)
+
+
+'''
+# 내가 작성한 틀린 풀이
+
+import collections
 
 graph = collections.defaultdict(list)
 nodes, edges = map(int, sys.stdin.readline().split())
@@ -55,14 +83,9 @@ def dfs(now, cost, order):
             cost.append(cost[-1]+d)
             dfs(e, cost, order)
 
-
-# 1에서 모두 돌아서 1로 돌아오는 것은
-# 1에서 2로 가서 2에서 1로 돌아오는 것,
-# 1에서 2에서 3에서 1로 돌아오는 것... 해서
-# 최소값을 구하면 된다....
-
-# 다 돌 필요가 없다..?
 ret = []
-dfs(0, [0], [0])
+for i in range(nodes):
+    dfs(i, [0], [i])
 
 print(min(ret))
+'''
