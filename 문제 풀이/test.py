@@ -278,7 +278,6 @@ h1, ..., hn (0 ≤ hi ≤ 1,000,000,000)가 주어진다. 이 숫자들은 히�
 각 테스트 케이스에 대해서, 히스토그램에서 가장 넓이가 큰 직사각형의 넓이를 출력한다.
 '''
 '''
-import sys
 while True:
     read = list(map(int, sys.stdin.readline().split()))
     if len(read) == 1:
@@ -291,9 +290,49 @@ while True:
 # 중간을 포함하거나, 왼쪽에 있거나, 오른쪽에 있거나이다.
 #
 
+import sys
+read = sys.stdin.readline
 
-def solution(bars):
-    if not bars:
-        return 0
-    if len(bars) == 1:
-        return bars[0]
+while True:
+    data = list(map(int, read().split()))
+    bars = data[1:] + [0]
+    N = data[0]
+    del data
+    if not N:
+        break
+
+    stack = []
+    ans = 0
+
+    for idx in range(N+1):
+        while stack and bars[idx] <= stack[-1][-1]:
+            w, h = stack.pop()
+            if stack:
+                width = idx - stack[-1][0] - 1
+            else:
+                width = idx
+            ans = max(ans, width*h)
+        stack.append((idx, bars[idx]))
+    print(ans)
+
+
+while True:
+    input_data = input()
+    if input_data == '0':
+        break
+    input_data = list(map(int, input_data.split()))
+    n, heights = input_data[0], input_data[1:]
+    n += 1
+    heights.append(0)
+    stack = []
+    answer = 0
+    for idx in range(n):
+        while stack and heights[stack[-1]] >= heights[idx]:
+            temp = stack.pop()
+            if stack:
+                w = idx - stack[-1] - 1
+            else:
+                w = idx
+            answer = max(answer, w * heights[temp])
+        stack.append(idx)
+    print(answer)
