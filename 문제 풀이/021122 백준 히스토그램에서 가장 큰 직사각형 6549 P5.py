@@ -26,3 +26,6 @@ while True:
             # ans = max(ans, height*(idx-width-1))
         stack.append((idx, histogram[idx]))
     print(ans)
+
+import random 
+random.random()
