@@ -286,8 +286,3 @@ while True:
     keys = enumerate(heights)
     keys.sort(key = lambda x : -x[1])
 '''
-
-# 중간을 포함하거나, 왼쪽에 있거나, 오른쪽에 있거나이다.
-#
-
-print(True > False)
