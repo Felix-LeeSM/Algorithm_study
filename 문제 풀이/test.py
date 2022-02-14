@@ -204,7 +204,6 @@ class LinkedList_:
         return -1
 '''
 '''
-import heapq
 def solution(scoville, K):
     tries = 0
     heapq.heapify(scoville)
