@@ -285,3 +285,38 @@ while True:
     keys = enumerate(heights)
     keys.sort(key = lambda x : -x[1])
 '''
+
+
+def solution(n, costs):
+    visited = [{i} for i in range(n)]
+    bridge = 0
+    costs.sort(key=lambda x: -x[2])
+    while len(visited[0]) < n:
+        a, b, d = costs.pop()
+        if b in visited[a] or a in visited[b] or {a, b} <= visited[0]:
+            continue
+        visited[b].add(a)
+        visited[a].add(b)
+        if a in visited[0] or b in visited[0]:
+            visited[0].update(visited[a] | visited[b])
+        bridge += d
+    return bridge
+
+
+print('1번:', solution(
+    4, [[0, 1, 1], [0, 2, 2], [1, 2, 5], [1, 3, 1], [2, 3, 8]]), 4)
+print('2번:', solution(5, [[0, 1, 5], [1, 2, 3], [2, 3, 3], [
+      3, 1, 2], [3, 0, 4], [2, 4, 6], [4, 0, 7]]), 15)
+print('3번:', solution(5, [[0, 1, 1], [3, 4, 1], [1, 2, 2], [2, 3, 4]]), 8)
+print('4번:', solution(4, [[0, 1, 5], [1, 2, 3],
+      [2, 3, 3], [1, 3, 2], [0, 3, 4]]), 9)
+print('5번:', solution(5, [[0, 1, 1], [3, 1, 1], [
+      0, 2, 2], [0, 3, 2], [0, 4, 100]]), 104)
+print('6번:', solution(6, [[0, 1, 5], [0, 3, 2], [0, 4, 3], [1, 4, 1], [
+      3, 4, 10], [1, 2, 2], [2, 5, 3], [4, 5, 4]]), 11)
+print('7번:', solution(5, [[0, 1, 1], [2, 3, 1], [
+      3, 4, 2], [1, 2, 2], [0, 4, 100]]), 6)
+print('8번:', solution(5, [[0, 1, 1], [0, 4, 5],
+      [2, 4, 1], [2, 3, 1], [3, 4, 1]]), 8)
+print('9번:', solution(5, [[0, 1, 1], [0, 2, 2],
+      [0, 3, 3], [0, 4, 4], [1, 3, 1]]), 8)
