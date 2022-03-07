@@ -285,3 +285,12 @@ while True:
     keys = enumerate(heights)
     keys.sort(key = lambda x : -x[1])
 '''
+N = int(input())
+
+if N in (1, 2, 4, 7):
+    print(-1)
+else:
+    if N % 5 > 2:
+        print(N//5 + N % 5-2)
+    else:
+        print(N//5 + N % 5)
