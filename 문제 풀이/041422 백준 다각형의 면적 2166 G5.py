@@ -16,14 +16,34 @@
 출력 형식에 대해서 확인이 필요하다...
 '''
 
+# import sys
+# input = sys.stdin.readline
+# coords = list()
+# area = 0
+# dots = int(input())
+# for _ in range(dots):
+#     coords.append(tuple(map(int, input().split())))
+# for idx in range(dots):
+#     area += coords[idx-1][0]*coords[idx][1] - coords[idx][0]*coords[idx-1][1]
+# area = abs(area) / 2
+# print('%.1f' % round(area, 1))
+# 배열 만드는 버젼
+# 메모리 31860kb, 88ms
+
 import sys
 input = sys.stdin.readline
-coords = list()
 area = 0
 dots = int(input())
-for _ in range(dots):
-    coords.append(tuple(map(int, input().split())))
-for idx in range(dots):
-    area += coords[idx-1][0]*coords[idx][1] - coords[idx][0]*coords[idx-1][1]
-area = abs(area) / 2
+init_x, init_y = map(int, input().split())
+pre_x, pre_y = init_x, init_y
+for _ in range(dots-1):
+    x, y = map(int, input().split())
+    area += pre_x*y - x*pre_y
+    pre_x, pre_y = x, y
+area += x*init_y - init_x*y
+area = abs(area)/2
 print('%.1f' % round(area, 1))
+# 배열 안 만드는 버젼
+# 메모리 30840kb, 76ms
+
+# 역시 배열을 만드는 것이 메모리도 더 먹고, 시간도 더 오래 쓰는 것 같다.
