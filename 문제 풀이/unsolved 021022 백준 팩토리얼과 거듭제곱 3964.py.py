@@ -35,32 +35,33 @@
 
 import sys
 import collections
+input = sys.stdin.readline
 
-
-for _ in range(int(sys.stdin.readline())):
-    ans = sys.maxsize
+for _ in range(int(input())):
     n, k = map(int, input().split())
-    primes = collections.defaultdict(int)  # 소인수분해 결과
+    ans = sys.maxsize
+    primes = collections.defaultdict(int)  # 소인수분해 결과  딕셔너리
 
-    while k % 2 == 0:
+    while not k % 2:
         primes[2] += 1
         k //= 2
-
     d = 3  # 소인수분해 해주기
-    while d <= k:
-        if k % d:
-            d += 2
-        else:
+    while d**2 <= k:
+        while not k % d:
             primes[d] += 1
             k //= d
+        d += 2
+    else:
+        if k != 1:
+            primes[k] += 1
 
-    for key, value in primes.items():  # 각각의 인수로 나눠보고, ans값 구하기
-        i = 1
-        x = key ** value
+    for prime, expo in primes.items():  # 각각의 인수로 나눠보고, ans값 구하기
         cnt = 0
-        while n >= x ** i:
-            cnt += n//(x**i)
-            i += 1
+        x = prime**expo
+        init = n//x
+        while init:
+            cnt += init
+            init //= x
         ans = min(cnt, ans)
 
     print(ans)
