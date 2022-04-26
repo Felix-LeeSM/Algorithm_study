@@ -46,32 +46,47 @@ s는 알파벳 소문자로만 이루어져 있습니다.
 '''
 
 
+# def solution(s):
+#     shorten = list()
+#     for divisor in range(1, len(s)//2 + 1):
+#         left = 0
+#         temp = list()
+#         while left < len(s):
+#             right = min(left + divisor, len(s))
+#             temp.append(s[left:right])
+#             left += divisor
+#         key = 0
+#         cnt = 1
+#         nums = []
+#         while key < len(temp) - 1:  # 마지막 걸 제대로 비교를 못하네...
+#             par = temp[key]
+#             key += 1
+#             if temp[key] == par:
+#                 cnt += 1
+#             else:
+#                 if cnt != 1:
+#                     nums.append(cnt)
+#                     cnt = 1
+#         else:
+#             if cnt != 1:
+#                 nums.append(cnt)
+#         length = len(s)
+#         for num in nums:
+#             length -= (num-1)*divisor - len(str(num))
+#         shorten.append(length)
+#     return min(shorten) if shorten else 1
+
 def solution(s):
-    shorten = list()
-    for divisor in range(1, len(s)//2 + 1):
-        left = 0
-        temp = list()
-        while left < len(s):
-            right = min(left + divisor, len(s))
-            temp.append(s[left:right])
-            left += divisor
-        key = 0
-        cnt = 1
-        nums = []
-        while key < len(temp) - 1:  # 마지막 걸 제대로 비교를 못하네...
-            par = temp[key]
-            key += 1
-            if temp[key] == par:
-                cnt += 1
+    ret = len(s)
+    for i in range(1, len(s)):
+        candidates = [s[j:j+i] for j in range(0, len(s), i)]
+        temp = []
+        for idx in range(len(candidates)):
+            if not temp or temp[-1] != candidates[idx]:
+                temp.append(1)
+                temp.append(candidates[idx])
             else:
-                if cnt != 1:
-                    nums.append(cnt)
-                    cnt = 1
-        else:
-            if cnt != 1:
-                nums.append(cnt)
-        length = len(s)
-        for num in nums:
-            length -= (num-1)*divisor - len(str(num))
-        shorten.append(length)
-    return min(shorten) if shorten else 1
+                temp[-2] += 1
+        result = len(''.join([str(i) for i in temp if i != 1]))
+        ret = min(result, ret)
+    return ret

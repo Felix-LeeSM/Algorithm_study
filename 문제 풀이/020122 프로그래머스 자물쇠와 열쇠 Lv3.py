@@ -10,6 +10,33 @@ key와 lock의 원소는 0 또는 1로 이루어져 있습니다.
 
 
 def solution(key, lock):
+    def rotate(bumps):
+        return {(j, len_key-1-i) for i, j in bumps}
+
+    def check(bumps):
+        for x in range(1-len_key, len_lock):
+            for y in range(1-len_key, len_lock):
+                temp = {(i+x, j+y) for i, j in bumps if 0 <=
+                        i+x < len_lock and 0 <= j+y < len_lock}
+                if temp == holes:
+                    return True
+        return False
+
+    len_lock = len(lock)
+    len_key = len(key)
+    holes = {(i, j) for i in range(len_lock)
+             for j in range(len_lock) if not lock[i][j]}
+    bumps = {(i, j) for i in range(len_key)
+             for j in range(len_key) if key[i][j]}
+    for _ in range(4):
+        if check(bumps):
+            return True
+        bumps = rotate(bumps)
+    return False
+
+
+'''
+def solution(key, lock):
     lk, ll = len(key), len(lock)
     holes = list()
     up = list()
@@ -39,6 +66,7 @@ def solution(key, lock):
         # key를 회전시킴 # x, y >> y, n-1-x [2][0] > [0][0]
         up = [(i[1], lk - i[0] - 1) for i in up]
     return False
+'''
 
 
 print(solution([[0, 0, 0], [1, 0, 0], [0, 1, 1]],

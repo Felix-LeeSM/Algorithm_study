@@ -95,6 +95,38 @@ import sys
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
+board = [input().split() for _ in range(N)]
+
+kfc = []
+homes = []
+
+for i in range(N):
+    for j in range(N):
+        if board[i][j] == '1':
+            homes.append((i, j))
+        elif board[i][j] == '2':
+            kfc.append((i, j))
+
+candidates = itertools.combinations(kfc, M)
+ans = sys.maxsize
+
+for candidate in candidates:
+    temp = 0
+    for i, j in homes:
+        par = sys.maxsize
+        for x, y in candidate:
+            par = min(par, abs(i-x)+abs(j-y))
+        temp += par
+    ans = min(ans, temp)
+
+print(ans)
+
+'''
+import itertools
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(N)]
 
 kfc = []
@@ -119,5 +151,5 @@ for candidate in candidates:
                     par = min(par, abs(i-x) + abs(j-y))
                 temp += par
     ans = min(ans, temp)
-
 print(ans)
+'''
