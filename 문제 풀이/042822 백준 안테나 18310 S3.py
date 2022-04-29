@@ -37,3 +37,12 @@ if len(cities) % 2:
     print(cities[len(cities)//2])
 else:
     print(cities[len(cities)//2-1])
+
+# 숏코딩
+
+# input()
+# cities = sorted(list(map(int, input().split())))
+# print(cities[len(cities)//2 - (not len(cities) % 2)])
+
+# n = int(input())
+# print(sorted(list(map(int, input().split())))[n//2 - (not n % 2)])
