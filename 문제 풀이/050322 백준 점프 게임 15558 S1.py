@@ -56,31 +56,28 @@ N번 칸보다 더 큰 칸으로 이동하는 경우에는 게임을 클리어�
 import collections
 import sys
 input = sys.stdin.readline
-inf = float('inf')
 N, k = map(int, input().split())
-lines = [input().strip()+'0'*(k+1) for _ in range(2)]
-visited = [[0]*N for _ in range(2)]
-visited[0][0] = 1
-ans = False
+lines = [input().strip() for _ in range(2)]
+visited = [[1]*N for _ in range(2)]
+visited[0][0] = 0
 stack = collections.deque([(0, 0, 0)])
 while stack:
     sd, dst, t = stack.popleft()
-    if dst > t+1 > 1 and not visited[sd][dst-1] and lines[sd][dst-1] == '1':
-        if visited[sd][dst-1]:
-            continue
+
+    if dst > t+1 and visited[sd][dst-1] and lines[sd][dst-1] == '1':
         stack.append((sd, dst-1, t+1))
-        visited[sd][dst-1] = 1
-    if dst+k < N and lines[abs(sd-1)][dst+k] == '1':
-        if visited[abs(sd-1)][dst+k]:
-            continue
+        visited[sd][dst-1] = 0
+
+    if dst+k < N and visited[abs(sd-1)][dst+k] and lines[abs(sd-1)][dst+k] == '1':
         stack.append((abs(sd-1), dst+k, t+1))
-        visited[abs(sd-1)][dst+k] = 1
-    if dst < N-1 and lines[sd][dst+1] == '1':
-        if visited[sd][dst+1]:
-            continue
+        visited[abs(sd-1)][dst+k] = 0
+
+    if dst < N-1 and visited[sd][dst+1] and lines[sd][dst+1] == '1':
         stack.append((sd, dst+1, t+1))
-        visited[sd][dst+1] = 1
+        visited[sd][dst+1] = 0
+
     if dst+k >= N:
-        ans = True
+        print(1)
         break
-print(+ans)
+else:
+    print(0)
