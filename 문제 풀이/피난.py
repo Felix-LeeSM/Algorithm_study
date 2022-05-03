@@ -1,4 +1,4 @@
-
+'''
 # 연결리스트 구현
 # 1. 노드 클래스 작성
 
@@ -138,3 +138,150 @@ print(a)
 for i in a:
     print(i)
 print(3)
+'''
+
+
+class Node:
+    def __init__(self, val=None, next=None) -> None:
+        self.val = val
+        self.next = next
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+
+    def __len__(self):
+        return self.size
+
+    def pushFront(self, value):
+        node = Node(value)
+        node.next = self.head
+        self.head = node
+        self.tail = self.tail or node
+        self.size += 1
+
+    def push(self, value):
+        node = Node(value)
+        if self.tail:
+            self.tail.next = node
+            self.tail = node
+            self.size += 1
+            return
+        self.tail = node
+        self.head = node
+        self.size = 1
+
+    def popFront(self):
+        head = self.head
+        if head:
+            self.head = head.next
+            self.size -= 1
+            self.tail = self.tail if self.size else None
+            return head.val
+        else:
+            raise ReferenceError
+
+    def pop(self):
+        if not self.tail:
+            raise ReferenceError
+
+        tail = self.tail
+
+        if self.size == 1:
+            self.size = 0
+            self.head = None
+            self.tail = None
+            return tail.val
+
+        if self.size == 2:
+            self.tail = self.head
+            self.size = 1
+            return tail.val
+
+        node = self.head
+        while node.next.next:
+            node = node.next
+        node.next = None
+        self.tail = node
+        self.size -= 1
+        return tail.val
+
+
+class stack:
+    def __init__(self) -> None:
+        self.head = None
+        self.tail = None
+        self.size = 0
+        return
+
+    def push(self, val) -> None:
+        self.size += 1
+        node = Node(val)
+        if self.tail:
+            self.tail.next = node
+            self.tail = node
+            return
+        self.head = self.tail = node
+        return
+
+    def pop(self) -> int:
+        if not self.size:
+            raise ReferenceError
+        if self.size == 1:
+            ret = self.head.val
+            self.head = self.tail = None
+            self.size = 0
+            return ret
+
+        elif self.size == 2:
+            ret = self.tail.val
+            self.tail = self.head.next
+            self.tail.next = None
+            self.size = 1
+            return ret
+
+        node, ret = self.head, self.tail.val
+        while node.next.next:
+            node = node.next
+        node.next = None
+        self.tail = node
+        self.size -= 1
+        return ret
+
+
+class queue:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+
+    def push(self, val):
+        node = Node(val)
+        if not self.head:
+            self.head = self.tail = node
+            self.size = 1
+            return
+        self.tail.next = node
+        self.tail = node
+        self.size += 1
+
+    def popleft(self):
+        head = self.head
+        if not self.head:
+            raise ReferenceError
+        self.head = head.next
+        self.size -= 1
+        return head.val
+
+
+s = queue()
+
+
+for i in range(10):
+    s.push(i)
+
+for i in range(11):
+    print(s.popleft())
