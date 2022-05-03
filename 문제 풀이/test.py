@@ -126,230 +126,162 @@ def destination(n, moves):
 
 print(destination(int(input()), input().split()))
 '''
-'''
-class Node_:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
-class LinkedList_:
-    def __init__(self):
-        init = Node_('init')
-        self.head = init
-        self.tail = init
-
-        self.node = None
-        self.datas = 0
-
-    def __len__(self):
-        return self.datas
-
-    def __str__(self):
-        node = self.head
-        node = node.next
-        s = ''
-
-        for i in range(self.datas):
-            s += f'{node.data}, '
-            node = node.next
-
-        return f'[{s[:-2]}]'
-
-    def __iter__(self):
-        node = self.head
-        node = node.next
-
-        while node:
-            yield node.data
-            node = node.next
-
-    def insert(self, input_index, input_data):
-        node = self.head
-
-        for i in range(input_index):
-            node = node.next
-
-        new_node = Node_(input_data)
-        new_node.next = node.next
-        node.next = new_node
-
-        self.datas += 1
-
-    def append(self, data):
-        newnode = Node_(data)
-        self.tail.next = newnode
-        self.tail = newnode
-        self.datas += 1
-
-    def pop(self):
-        end_node = self.tail.data
-        node = self.head
-
-        for i in range(self.datas):
-            if node.next is self.tail:
-                self.tail = node
-                break
-            node = node.next
-
-        self.datas -= 1
-        return end_node
-
-    def find(self, data):
-        index = -1
-        node = self.head
-
-        for i in range(self.datas+1):
-            if node.data == data:
-                return index
-            index += 1
-            node = node.next
-
-        return -1
-'''
-'''
-def solution(scoville, K):
-    tries = 0
-    heapq.heapify(scoville)
-    length = len(scoville)
-    while length >= 2:
-        a, b = heapq.heappop(scoville), heapq.heappop(scoville)
-        length -= 2
-        if a < K:
-            c = a + 2*b
-            tries += 1
-            if c < K:
-                heapq.heappush(scoville, c)
-                length += 1
-        else:
-            return tries
-    else:
-        if min(scoville) >= K:
-            return tries
-        else:
-            return -1
-
-solution([1, 2, 3, 9, 10, 12], 1)
-'''
-'''
-문제
-한국도로공사는 고속도로의 유비쿼터스화를 위해 고속도로 위에 N개의 센서를 설치하였다.
-문제는 이 센서들이 수집한 자료들을 모으고 분석할 몇 개의 집중국을 세우는 일인데,
-예산상의 문제로, 고속도로 위에 최대 K개의 집중국을 세울 수 있다고 한다.
-
-각 집중국은 센서의 수신 가능 영역을 조절할 수 있다. 집중국의 수신 가능 영역은
-고속도로 상에서 연결된 구간으로 나타나게 된다. N개의 센서가 적어도 하나의 집중국과는 통신이 가능해야 하며,
-집중국의 유지비 문제로 인해 각 집중국의 수신 가능 영역의 길이의 합을 최소화해야 한다.
-
-편의를 위해 고속도로는 평면상의 직선이라고 가정하고, 센서들은 이 직선 위의 한 기점인
-원점으로부터의 정수 거리의 위치에 놓여 있다고 하자. 따라서, 각 센서의 좌표는 정수 하나로 표현된다.
-이 상황에서 각 집중국의 수신 가능영역의 거리의 합의 최솟값을 구하는 프로그램을 작성하시오.
-단, 집중국의 수신 가능영역의 길이는 0 이상이며 모든 센서의 좌표가 다를 필요는 없다.
-
-입력
-첫째 줄에 센서의 개수 N(1 ≤ N ≤ 10,000), 둘째 줄에 집중국의 개수 K(1 ≤ K ≤ 1000)가 주어진다.
-셋째 줄에는 N개의 센서의 좌표가 한 개의 정수로 N개 주어진다. 각 좌표 사이에는 빈 칸이 하나 있으며, 좌표의 절댓값은 1,000,000 이하이다.
-
-<<예시>>
-6
-2
-1 6 9 3 6 7
-출력 : 5
-
-10
-5
-20 3 14 6 7 8 18 10 12 15
-출력 : 7
-'''
-'''
-문제
-히스토그램은 직사각형 여러 개가 아래쪽으로 정렬되어 있는 도형이다.
-각 직사각형은 같은 너비를 가지고 있지만, 높이는 서로 다를 수도 있다.
-예를 들어, 왼쪽 그림은 높이가 2, 1, 4, 5, 1, 3, 3이고 너비가 1인 직사각형으로 이루어진 히스토그램이다.
 
 
-
-히스토그램에서 가장 넓이가 큰 직사각형을 구하는 프로그램을 작성하시오.
-
-입력
-입력은 테스트 케이스 여러 개로 이루어져 있다. 각 테스트 케이스는 한 줄로 이루어져 있고,
-직사각형의 수 n이 가장 처음으로 주어진다. (1 ≤ n ≤ 100,000) 그 다음 n개의 정수
-h1, ..., hn (0 ≤ hi ≤ 1,000,000,000)가 주어진다. 이 숫자들은 히스토그램에 있는 직사각형의 높이이며,
-왼쪽부터 오른쪽까지 순서대로 주어진다. 모든 직사각형의 너비는 1이고, 입력의 마지막 줄에는 0이 하나 주어진다.
-
-출력
-각 테스트 케이스에 대해서, 히스토그램에서 가장 넓이가 큰 직사각형의 넓이를 출력한다.
-'''
-'''
-while True:
-    read = list(map(int, sys.stdin.readline().split()))
-    if len(read) == 1:
-        break
-    n, heights = read[0], read[1:]
-    keys = enumerate(heights)
-    keys.sort(key = lambda x : -x[1])
-'''
-
-
-'''
-문제
-라그랑주는 1770년에 모든 자연수는 넷 혹은 그 이하의 제곱수의 합으로 표현할 수 있다고 증명하였다.
-어떤 자연수는 복수의 방법으로 표현된다. 예를 들면, 26은 52과 12의 합이다; 또한 42 + 32 + 12으로 표현할 수도 있다.
-역사적으로 암산의 명수들에게 공통적으로 주어지는 문제가 바로 자연수를 넷 혹은 그 이하의 제곱수 합으로 나타내라는 것이었다.
-1900년대 초반에 한 암산가가 15663 = 1252 + 62 + 12 + 12라는 해를 구하는데 8초가 걸렸다는 보고가 있다.
-좀 더 어려운 문제에 대해서는 56초가 걸렸다: 11339 = 1052 + 152 + 82 + 52.
-
-자연수 n이 주어질 때, n을 최소 개수의 제곱수 합으로 표현하는 컴퓨터 프로그램을 작성하시오.
-
-입력
-입력은 표준입력을 사용한다. 입력은 자연수 n을 포함하는 한 줄로 구성된다. 여기서, 1 ≤ n ≤ 50,000이다.
-
-출력
-출력은 표준출력을 사용한다. 합이 n과 같게 되는 제곱수들의 최소 개수를 한 줄에 출력한다.
-
-예제 입력 1
-25
-예제 출력 1
-1
-
-예제 입력 2
-26
-예제 출력 2
-2
-
-예제 입력 3
-11339
-예제 출력 3
-3
-
-예제 입력 4
-34567
-예제 출력 4
-4
-'''
-
-
-'''
-문제
-오른쪽 그림과 같이 삼각형이 나선 모양으로 놓여져 있다. 첫 삼각형은 정삼각형으로 변의 길이는 1이다.
-그 다음에는 다음과 같은 과정으로 정삼각형을 계속 추가한다.
-나선에서 가장 긴 변의 길이를 k라 했을 때, 그 변에 길이가 k인 정삼각형을 추가한다.
-
-파도반 수열 P(N)은 나선에 있는 정삼각형의 변의 길이이다. P(1)부터 P(10)까지 첫 10개 숫자는 1, 1, 1, 2, 2, 3, 4, 5, 7, 9이다.
-
-N이 주어졌을 때, P(N)을 구하는 프로그램을 작성하시오.
-
-입력
-첫째 줄에 테스트 케이스의 개수 T가 주어진다. 각 테스트 케이스는 한 줄로 이루어져 있고, N이 주어진다. (1 ≤ N ≤ 100)
-
-출력
-각 테스트 케이스마다 P(N)을 출력한다.
-
-예제 입력 1
-2
-6
-12
-예제 출력 1
-3
-16
-'''
 # 1 1 1 2 2 3 4 5 7 9 12 16 21 28 37
+# import collections
+# import sys
+# input = sys.stdin.readline
+
+# V = int(input())
+# head = set()
+# graph = collections.defaultdict(list)
+
+# for _ in range(V):
+#     node, *rest = map(int, input().split())
+#     node -= 1
+#     for i in range(0, len(rest)-1, 2):
+#         n, d = rest[i], rest[i+1]
+#         graph[node].append((n-1, d))
+
+# # 아무거나 하나 잡고, 자식들을 끝까지 모두 보낸 후, 2개를 합쳐서 최대값을 뽑는다.
+
+# print(graph)
+
+
+'''
+문제
+때는 2020년, 백준이는 월드나라의 한 국민이다.
+월드나라에는 N개의 지점이 있고 N개의 지점 사이에는 M개의 도로와 W개의 웜홀이 있다.
+(단 도로는 방향이 없으며 웜홀은 방향이 있다.)
+웜홀은 시작 위치에서 도착 위치로 가는 하나의 경로인데, 특이하게도 도착을 하게 되면 시작을 하였을 때보다 시간이 뒤로 가게 된다.
+웜홀 내에서는 시계가 거꾸로 간다고 생각하여도 좋다.
+
+시간 여행을 매우 좋아하는 백준이는 한 가지 궁금증에 빠졌다.
+한 지점에서 출발을 하여서 시간여행을 하기 시작하여 다시 출발을 하였던 위치로 돌아왔을 때,
+출발을 하였을 때보다 시간이 되돌아가 있는 경우가 있는지 없는지 궁금해졌다.
+여러분은 백준이를 도와 이런 일이 가능한지 불가능한지 구하는 프로그램을 작성하여라.
+
+입력
+첫 번째 줄에는 테스트케이스의 개수 TC(1 ≤ TC ≤ 5)가 주어진다.
+그리고 두 번째 줄부터 TC개의 테스트케이스가 차례로 주어지는데 각 테스트케이스의
+첫 번째 줄에는 지점의 수
+N(1 ≤ N ≤ 500),
+도로의 개수
+M(1 ≤ M ≤ 2500),
+웜홀의 개수
+W(1 ≤ W ≤ 200)이 주어진다.
+그리고 두 번째 줄부터 M+1번째 줄에 도로의 정보가 주어지는데 각 도로의 정보는 S, E, T 세 정수로 주어진다.
+S와 E는 연결된 지점의 번호, T는 이 도로를 통해 이동하는데 걸리는 시간을 의미한다.
+그리고 M+2번째 줄부터 M+W+1번째 줄까지 웜홀의 정보가 S, E, T 세 정수로 주어지는데
+S는 시작 지점, E는 도착 지점, T는 줄어드는 시간을 의미한다. T는 10,000보다 작거나 같은 자연수 또는 0이다.
+
+두 지점을 연결하는 도로가 한 개보다 많을 수도 있다. 지점의 번호는 1부터 N까지 자연수로 중복 없이 매겨져 있다.
+
+출력
+TC개의 줄에 걸쳐서 만약에 시간이 줄어들면서 출발 위치로 돌아오는 것이 가능하면 YES, 불가능하면 NO를 출력한다.
+
+예제 입력 1
+2
+3 3 1
+1 2 2
+1 3 4
+2 3 1
+3 1 3
+3 2 1
+1 2 3
+2 3 4
+3 1 8
+예제 출력 1
+NO
+YES
+'''
+'''
+inf = float('inf')
+N = int(input())
+
+
+for _ in range(N):
+    num_point, num_road, num_hole = map(int, input().split())
+    roads = [[inf]*num_point for _ in range(num_point)]
+    for i in range(num_point):
+        roads[i][i] = 0
+
+    for __ in range(num_road):
+        s, e, t = map(int, input().split())
+        roads[s-1][e-1] = roads[e-1][s-1] = min(roads[s-1][e-1], t)
+    for __ in range(num_hole):
+        s, e, t = map(int, input().split())
+        roads[s-1][e-1] = min(roads[s-1][e-1], -t)
+
+    for i in range(num_point):
+        for j in range(num_point):
+            for k in range(num_point):
+                roads[i][j] = min(roads[i][j], roads[i][k]+roads[k][j])
+
+    for i in range(num_point):
+        for j in range(num_point):
+            for k in range(num_point):
+                if roads[j][i] + roads[i][j] < 0 and (roads[i][k] != inf or roads[j][k] != inf):
+                    print('NO')
+                    break
+            else:
+                continue
+            break
+
+        else:
+            continue
+        break
+    else:
+        print('YES')
+'''
+
+
+# hole로 플루이드 워셜을 만들고, 해당 결과를 반영해서 holes를 이용해서 다시 플루이드 워셜을 만든다?
+# 갔다가 오는데, 감소한다면
+
+# 파이썬 기본 자료구조 작동 코드 보기
+
+'''
+문제 설명
+n개의 섬 사이에 다리를 건설하는 비용(costs)이 주어질 때, 최소의 비용으로 모든 섬이 서로 통행 가능하도록 만들 때
+필요한 최소 비용을 return 하도록 solution을 완성하세요.
+
+다리를 여러 번 건너더라도, 도달할 수만 있으면 통행 가능하다고 봅니다. 예를 들어 A 섬과 B 섬 사이에 다리가 있고,
+B 섬과 C 섬 사이에 다리가 있으면 A 섬과 C 섬은 서로 통행 가능합니다.
+
+제한사항
+
+섬의 개수 n은 1 이상 100 이하입니다.
+costs의 길이는 ((n-1) * n) / 2이하입니다.
+임의의 i에 대해, costs[i][0] 와 costs[i] [1]에는 다리가 연결되는 두 섬의 번호가 들어있고,
+costs[i] [2]에는 이 두 섬을 연결하는 다리를 건설할 때 드는 비용입니다.
+같은 연결은 두 번 주어지지 않습니다. 또한 순서가 바뀌더라도 같은 연결로 봅니다.
+즉 0과 1 사이를 연결하는 비용이 주어졌을 때, 1과 0의 비용이 주어지지 않습니다.
+모든 섬 사이의 다리 건설 비용이 주어지지 않습니다. 이 경우, 두 섬 사이의 건설이 불가능한 것으로 봅니다.
+연결할 수 없는 섬은 주어지지 않습니다.
+입출력 예
+
+n	costs	return
+4	[[0,1,1],[0,2,2],[1,2,5],[1,3,1],[2,3,8]]	4
+입출력 예 설명
+
+costs를 그림으로 표현하면 다음과 같으며, 이때 초록색 경로로 연결하는 것이 가장 적은 비용으로 모두를 통행할 수 있도록 만드는 방법입니다.
+'''
+
+
+# def solution(n, costs):
+#     inf = float('inf')
+#     answer = 0
+#     board = [[inf]*n for _ in range(n)]
+#     for cost in costs:
+#         board[cost[0]][cost[1]] = board[cost[1]][cost[0]] = cost[-1]
+#     print(board)
+#     # 0~n-1 을 연결하는데,
+#     return answer
+
+
+# solution(4, [[0, 1, 1], [0, 2, 2], [1, 2, 5], [1, 3, 1], [2, 3, 8]])
+
+N = int(input())
+works =
