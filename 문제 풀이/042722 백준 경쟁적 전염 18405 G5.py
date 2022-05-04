@@ -84,3 +84,39 @@ while queue:
 print(board[X-1][Y-1])
 
 # 힙을 적절히 이용하면, 경쟁은 알아서 해결된다.
+'''
+import sys
+import collections
+input = sys.stdin.readline
+
+di, dj = (0, 0, 1, -1), (1, -1, 0, 0)
+n, k = map(int, input().split())
+board = []
+for i in range(n):
+    line = list(map(int, input().split()))
+    board.append(line)
+
+s, x, y = map(int, input().split())
+
+now = [[] for _ in range(k+1)]
+for i in range(n):
+    for j in range(n):
+        if board[i][j]:
+            now[board[i][j]].append((i, j))
+
+for _ in range(s):
+    if board[x-1][y-1]:
+        break
+    for v in range(1, k+1):
+        que = collections.deque(now[v])
+        now[v].clear()
+        while que:
+            i, j = que.popleft()
+            for d in range(4):
+                ni, nj = i + di[d], j + dj[d]
+                if 0 <= ni < n and 0 <= nj < n and not board[ni][nj]:
+                    board[ni][nj] = v
+                    now[v].append((ni, nj))
+
+print(board[x-1][y-1])
+'''
