@@ -281,13 +281,13 @@ costs를 그림으로 표현하면 다음과 같으며, 이때 초록색 경로�
 # solution(4, [[0, 1, 1], [0, 2, 2], [1, 2, 5], [1, 3, 1], [2, 3, 8]])
 
 '''
-두 개의 문자열 A와 B가 주어졌을 떄, 문자열 A를 편집하여 문자열 B로 만들고자 합니다. 
+두 개의 문자열 A와 B가 주어졌을 떄, 문자열 A를 편집하여 문자열 B로 만들고자 합니다.
 문자열 A를 편집할 때는 다음의 세 연산 중에서 한 번에 하나씩 선택하여 이용할 수 있습니다.
     1. 삽입(Insert): 특정한 위치에 하나의 문자를 삽입합니다.
     2. 삭제(Remove): 특정한 위치에 있는 하나의 문자를 삭제합니다.
     3. 교체(Replace): 특정한 위치에 있는 하나의 문자를 다른 문자로 교체합니다.
 이떄 편집 거리란 문자열 A를 편집하여 문자열 B로 만들기 위해 사용한 연산의 수를 의미합니다.
-문자열 A를 문자열 B로 만드는 최소 편집 거리를 계산하는 프로그램을 작성하세요. 
+문자열 A를 문자열 B로 만드는 최소 편집 거리를 계산하는 프로그램을 작성하세요.
 예를 들어 "sunday"와 "saturday"의 최소 편집 거리는 3입니다.
 
 입력 조건
@@ -308,81 +308,347 @@ saturday
 출력 예시 2
 3
 '''
-
-'''
-학생들의 성적을 비교한 결과가 주어질 때, 성적 순위를 정확히 알 수 있는 학생은 모두 몇 명인지 계산하는 프로그램을 작성하세요.
-
-첫째 줄에 학생들의 수 N, 두 학생의 성적을 비교한 횟수 M
-다음 M개의 각 줄에는 두 학생의 성적을 비교한 결과를 나타내는 두 양의 정수 A와 B가 주어집니다. 이는 A번 학생의 성적이 B번 학생보다 낮다는 것을 의미합니다.
-
-입력 예시
-6 6
-1 5
-3 4
-4 2
-4 6
-5 2
-5 4
-
-출력 예시
-1
-
-'''
-
 '''
 문제
-민서는 강원대학교 컴퓨터공학과의 신임 교수이다. 
-그녀가 저술한 효율적인 택배 배달을 위한 최적 경로 설계에 관한 연구 논문은 아직도 널리 인용되고 있다. 
-오늘도 열심히 강의를 하던 민서는 놀라 자빠질 수밖에 없었다. 한 학생이 꾸벅꾸벅 졸다가 책상에 머리를 아주 세게 박았기 때문이다. 
-한시라도 수술이 시급한 상황, 민서는 의사가 되어 수술을 집도하기로 결심하였다.
+방향성이 없는 그래프가 주어진다. 세준이는 1번 정점에서 N번 정점으로 최단 거리로 이동하려고 한다.
+또한 세준이는 두 가지 조건을 만족하면서 이동하는 특정한 최단 경로를 구하고 싶은데,
+그것은 바로 임의로 주어진 두 정점은 반드시 통과해야 한다는 것이다.
 
-사람의 뇌는 수백억 개의 뉴런으로 구성되며, 각 뉴런은 시냅스를 통하여 연결된다. 
-민서의 진찰 결과, 학생은 뇌 속의 일부 뉴런의 연결이 끊어져 잠이 든 것으로 확인되었다. 
-끊어진 시냅스만 복구된다면 학생은 잠에서 깨어나겠지만, 알다시피 민서는 컴퓨터공학과 교수이다.
-
-민서는 끊어진 시냅스를 복구하는 대신 뇌 속의 모든 뉴런을 하나의 트리 형태로 연결해보고자 한다. 
-여기서 트리란 사이클이 존재하지 않는 연결 그래프를 의미한다.
-
-민서는 손기술이 뛰어나기 때문에 다음과 같은 연산을 무한히 수행할 수 있다. 
-연결되지 않은 두 뉴런을 연결하거나 이미 연결된 두 뉴런의 연결을 끊는다.
-
-뉴런의 연결 정보가 주어졌을 때, 
-모든 뉴런을 하나의 트리 형태로 연결하기 위하여 필요한 최소 연산 횟수를 구하는 프로그램을 작성하시오.
+세준이는 한번 이동했던 정점은 물론, 한번 이동했던 간선도 다시 이동할 수 있다.
+하지만 반드시 최단 경로로 이동해야 한다는 사실에 주의하라.
+1번 정점에서 N번 정점으로 이동할 때, 주어진 두 정점을 반드시 거치면서 최단 경로로 이동하는 프로그램을 작성하시오.
 
 입력
-첫 번째 줄에 뉴런의 개수 N과 시냅스의 개수 M이 주어진다.
-
-이후 M개의 줄에 걸쳐 시냅스로 연결된 두 뉴런의 번호 u, v가 주어진다.
-
-모든 입력은 공백으로 구분되어 주어진다.
+첫째 줄에 정점의 개수 N과 간선의 개수 E가 주어진다.
+둘째 줄부터 E개의 줄에 걸쳐서 세 개의 정수 a, b, c가 주어지는데,
+a번 정점에서 b번 정점까지 양방향 길이 존재하며, 그 거리가 c라는 뜻이다.
+다음 줄에는 반드시 거쳐야 하는 두 개의 서로 다른 정점 번호 v1과 v2가 주어진다.
+임의의 두 정점 u와 v사이에는 간선이 최대 1개 존재한다.
+(2 ≤ N ≤ 800, 0 ≤ E ≤ 200,000)
+(1 ≤ c ≤ 1,000)
+(v1 ≠ v2, v1 ≠ N, v2 ≠ 1)
 
 출력
-첫 번째 줄에 모든 뉴런을 트리 형태로 연결하기 위하여 필요한 최소 연산 횟수를 출력한다.
+첫째 줄에 두 개의 정점을 지나는 최단 경로의 길이를 출력한다. 그러한 경로가 없을 때에는 -1을 출력한다.
 
-제한
-2 ≤ N ≤ 100,000
-1 ≤ M ≤ min(N x (N - 1) / 2, 100,000)
-1 ≤ u, v ≤ N
-u ≠ v
-두 뉴런 사이에는 최대 1개의 시냅스만 존재한다.
-
-예제 입력 1 
-4 2
-1 2
-3 4
-예제 출력 1 
-1
-
-예제 입력 2
-10 7
-1 2
+예제 입력 1
+4 6
+1 2 3
+2 3 3
+3 4 1
+1 3 5
+2 4 5
+1 4 4
 2 3
-2 4
-3 8
-5 6
-5 7
-7 10
-예제 출력 2
-2
+예제 출력 1
+7
+'''
+
+'''1'''
+
+# 1. 문자열에 'AWS'가 속해있는지 검사한다.
+# 2. 'AWS'를 제거하고, 1을 반복한다.
+# 3. 문자열에 'AWS'가 없을 때 빈 문자열이면 '-1'을, 아니면 'AWS'가 제거된 문자열을 반환해라
+
+# def getFinalString(s):
+#     li = []
+#     for i in s:
+#         li.append(i)
+#         if len(li) >= 3 and li[-3:] == ['A', 'W', 'S']:
+#             li.pop()
+#             li.pop()
+#             li.pop()
+#     return ''.join(li) if li else '-1'
+
+'''2'''
+
+# 숫자가 들어온다. 하나의 digit이 버그가 나서 다른 digit으로 변해버린다. 그 종류 통째로
+# 이 때, 최대값과 최소값의 차이를 구하라
+
+# def findRange(num):
+#     num = str(num)
+
+#     def getMax(s: str):
+#         for idx in range(len(s)):
+#             if s[idx] != '9':
+#                 break
+#         else:
+#             return int(s)
+#         return int(s.replace(s[idx], '9'))
+
+#     def getMin(s: str):
+#         if s[0] == '1':
+#             for idx in range(1, len(s)):
+#                 if s[idx] not in ['0', '1']:
+#                     tar = s[idx]
+#                     to = '0'
+#                     break
+#             else:
+#                 return int(s)
+#         else:
+#             tar = s[0]
+#             to = '1'
+#         return int(s.replace(tar, to))
+#     return getMax(num)-getMin(num)
+
+'''3'''
+
+# 숫자 어레이 받아서 합이 k 이하인 최대 subset 길이
+
+# import collections
+# def maxLength(num, k):
+#     total = 0
+#     ret = collections.deque()
+#     answer = 0
+#     for i in range(len(num)):
+#         total += num[i]
+#         ret.append(num[i])
+#         while total > k:
+#             total -= ret.popleft()
+#         answer = max(answer, len(ret))
+#     return answer
+
+
+# print(maxLength([1, 2, 3], 4))
+# print(maxLength([3, 1, 2, 1], 4))
+
+
+'''4'''
+
+# 1 철자만 다른 단어는 이동 가능하다
+# 이동 가능한 단어들을 이었을 때, 가장 길게 연결된 사슬의 길이+1을 구하라
+
+
+# import heapq
+# import itertools
+# import collections
+# def longestChain(n, words):
+#     def check(a, b):
+#         ai, bi = 0, 0
+#         while ai < len(a):
+#             if bi-ai > 1:
+#                 return False
+#             if a[ai] == b[bi]:
+#                 ai += 1
+#             bi += 1
+#         return True
+
+#     lengths = collections.defaultdict(list)
+#     graph = collections.defaultdict(list)
+#     words.sort(key=lambda x: len(x))
+
+#     for word in enumerate(words):
+#         lengths[len(word[1])].append(word)
+
+#     for i in lengths.keys():
+#         if i-1 in lengths:
+#             fr = lengths[i]
+#             to = lengths[i-1]
+#             for i_f, w_f in fr:
+#                 for i_t, w_t in to:
+#                     if check(w_t, w_f):  # 짧, 긴
+#                         graph[i_f].append(i_t)
+
+#     board = [1]*n
+#     for i in range(n+1, -1, -1):
+#         for j in graph[i]:
+#             board[j] = max(board[j], board[i]+1)
+#     return max(board)
+
+
+# print(longestChain(6, ['a', 'b', 'ba', 'bca', 'bda', 'bdca']))
+
+'''5'''
+
+# 1 ~ n까지 가되, visitNodes를 한번 이상 방문해라
+# n은 node 갯수
+
+
+# def minimumTreePath(n, edges, visitNodes):
+#     if not edges:
+#         return 0
+
+#     graph = collections.defaultdict(list)
+#     for s, e in map(lambda x: (x[0]-1, x[1]-1), edges):
+#         graph[s].append(e)
+#         graph[e].append(s)
+
+#     dj = [float('inf')]*n
+#     dj[-1] = 0
+#     que = [(n-1, 0)]
+#     while que:
+#         node, dist = heapq.heappop(que)
+#         for end in graph[node]:
+#             if dj[end] > dist+1:
+#                 dj[end] = dist+1
+#                 heapq.heappush(que, (end, dist+1))
+
+#     board = [float('inf')]*n
+
+#     def sol(start, toVisit, cost):
+#         if toVisit:
+#             return min([sol(i, toVisit-{i}, cost+1) for i in graph[start]])
+#         return dj[start]
+
+#     return sol(0, set(visitNodes), 0)
+
+
+# def minimumTreePath(n, edges, visitNodes):
+#     inf = float('inf')
+
+#     graph = collections.defaultdict(list)
+#     for s, e in edges:
+#         graph[s].append(e)
+#         graph[e].append(s)
+
+#     def shortest(fr, to):
+#         board = [inf]*(n+1)
+#         board[fr] = 0
+#         que = [(0, fr)]
+#         while que:
+#             d, st = heapq.heappop(que)
+#             if st == to:
+#                 return d
+#             for mid in graph[st]:
+#                 if board[mid] > d+1:
+#                     board[mid] = d+1
+#                     heapq.heappush(que, (d+1, mid))
+#         return inf
+
+#     ret = inf
+#     for i in itertools.permutations(visitNodes, len(visitNodes)):
+#         cnt = 0
+#         node = 1
+#         for j in i:
+#             cnt += shortest(node, j)
+#             if cnt >= inf:
+#                 break
+#             node = j
+#         cnt += shortest(node, n)
+#         ret = min(cnt, ret)
+#     return ret
+
+
+# def minimumTreePath(n, edges, visitNodes):
+#     inf = float('inf')
+
+#     graph = collections.defaultdict(list)
+#     for s, e in edges:
+#         graph[s].append(e)
+#         graph[e].append(s)
+
+#     def shortest(fr, to):
+#         board = [inf]*(n+1)
+#         board[fr] = 0
+#         que = [(0, fr)]
+#         while que:
+#             d, st = heapq.heappop(que)
+#             if st == to:
+#                 return d
+#             for mid in graph[st]:
+#                 if board[mid] > d+1:
+#                     board[mid] = d+1
+#                     heapq.heappush(que, (d+1, mid))
+#         return inf
+
+#     ret = inf
+#     for i in itertools.permutations(visitNodes, len(visitNodes)):
+#         cnt = 0
+#         node = 1
+#         for j in i:
+#             cnt += shortest(node, j)
+#             if cnt >= inf:
+#                 break
+#             node = j
+#         cnt += shortest(node, n)
+#         ret = min(cnt, ret)
+#     return ret
+
+
+# print(minimumTreePath(3, [(1, 2), (1, 3)], [2]))
+
+
+# def solution(s, k):
+#     ret = float('inf')
+#     lth = len(s)-1
+#     par = -1
+#     for idx in range(lth+1):
+#         if idx <= par:
+#             continue
+#         if s[idx] >= ret:
+#             continue
+#         temp = s[idx]
+#         l, r = idx, idx
+#         while r-l < k:
+#             # 왼쪽으로 가는 경우:
+#             # 오른쪽으로 못 갈 때
+#             # 왼쪽이 더 작을 떄
+#             if r >= lth or (l > 0 and s[l-1] <= s[r]):
+#                 l -= 1
+#                 if s[l] >= ret:
+#                     par = l
+#                 if s[l] > temp:
+#                     break
+#             else:
+#                 if s[r] >= ret:
+#                     par = r
+#                 if s[r] > temp:
+#                     break
+#                 r += 1
+#         else:
+#             ret = temp
+#     print(ret)
+#     return ret
+
+
+# solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3)
+
 
 '''
+백준 내리막길
+https://www.acmicpc.net/problem/1520
+
+def dfs(x, y):
+    if x == m-1 and y == n-1:
+        return 1
+    if temp[x][y] >= 0:
+        return temp[x][y]
+    temp[x][y] = 0
+    for d in range(4):
+        nx, ny = x+dx[d], y+dy[d]
+        if 0 <= nx < m and 0 <= ny < n:
+            if board[nx][ny] < board[x][y]:
+                temp[x][y] += dfs(nx, ny)
+    return temp[x][y]
+
+m, n = map(int, input().split())
+board = [tuple(map(int, input().split())) for _ in range(m)]
+
+temp = [[-1]*n for _ in range(m)]
+dx, dy = (0, 0, 1, -1), (1, -1, 0, 0)
+
+    
+print(dfs(0, 0))
+'''
+
+# n, m, r = map(int, input().split())
+# supports = [0]+list(map(int, input().split()))
+# graph = {i: [] for i in range(1, n+1)}
+# for _ in range(r):
+#     s, e, d = map(int, input().split())
+#     graph[s].append((e, d))
+#     graph[e].append((s, d))
+
+
+n, m, r = map(int, input().split())
+items = [0]+list(map(int, input().split()))
+graph = {i: [] for i in range(1, n+1)}
+for _ in range(r):
+    s, e, d = map(int, input().split())
+    graph[s].append((e, d))
+    graph[e].append((s, d))
+print(graph)
+print(items)
+# 각각의 점에 대해서 knapsack을 한다..?
+# 어디선가 시작해서 그리디?
+# 시작점 끝점이 어디지?
