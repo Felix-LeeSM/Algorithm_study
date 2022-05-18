@@ -423,3 +423,5 @@
 //   const answer = Math.max(Math.max(horizontal), Math.max(vertical));
 //   return answer;
 // }
+
+console.log(typeof {} === 'object');
