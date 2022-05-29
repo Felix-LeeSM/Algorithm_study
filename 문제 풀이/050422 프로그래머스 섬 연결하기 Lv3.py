@@ -24,7 +24,7 @@ n	costs	return
 
 costs를 그림으로 표현하면 다음과 같으며, 이때 초록색 경로로 연결하는 것이 가장 적은 비용으로 모두를 통행할 수 있도록 만드는 방법입니다.
 '''
-# union find는 신세계야...
+# https://programmers.co.kr/learn/courses/30/lessons/42861
 
 
 def solution(n, costs):
