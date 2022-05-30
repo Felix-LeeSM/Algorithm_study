@@ -57,3 +57,37 @@ M은 상자의 가로 칸의 수, N은 상자의 세로 칸의 수를 나타낸�
 예제 출력 3 
 0
 '''
+import collections
+import sys
+input = sys.stdin.readline
+
+m, n, h = map(int, input().split())
+cube = []
+each_time = collections.defaultdict(list)
+di, dj, dk = (-1, 0, 0, 0, 0, 1), (0, -1, 0, 0, 1, 0), (0, 0, -1, 1, 0, 0)
+for i in range(h):
+    board = []
+    for j in range(n):
+        line = list(map(int, input().split()))
+        board.append(line)
+        for k in range(m):
+            if line[k] == 1:
+                each_time[0].append((i, j, k))
+    cube.append(board)
+
+time = 0
+while each_time[time]:
+    for i, j, k in each_time[time]:
+        for d in range(6):
+            ni, nj, nk = i + di[d], j + dj[d], k + dk[d]
+            if 0 <= ni < h and 0 <= nj < n and 0 <= nk < m and cube[ni][nj][nk] == 0:
+                cube[ni][nj][nk] = 1
+                each_time[time+1].append((ni, nj, nk))
+    time += 1
+
+for i, j, k in [(i, j, k) for i in range(h) for j in range(n) for k in range(m)]:
+    if cube[i][j][k] == 0:
+        print(-1)
+        break
+else:
+    print(time-1)
