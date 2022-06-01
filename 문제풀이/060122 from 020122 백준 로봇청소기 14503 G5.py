@@ -88,30 +88,31 @@ def dfs():
                 stack.append((ni, nj))
                 cnt += 1
 '''
-
-import sys
-read = sys.stdin.readline
-
-vector = ((-1, 0), (0, 1), (1, 0), (0, -1)) 
-row, col = map(int, read().split())
-board = []
-x, y, d = map(int, read().split())
-for _ in range(row):
-    board.append(list(map(int, read().split())))
-
-def dfs():
-    cnt = 0
-    stack = list()
-    stack.append((x, y))
-    while stack:
-        i, j = stack.pop()
-        for k in range(4):
-            ni = i + vector[k][0]
-            nj = j + vector[k][1]
-            if 0 <= ni < row and 0 <= nj < col and board[ni][nj] == 0:
-                board[ni][nj] = 1
-                stack.append((ni, nj))
-                cnt += 1
-    print(cnt)
-    return
-dfs()
+# https://www.acmicpc.net/problem/14503
+i, j = map(int, input().split())
+x, y, d = map(int, input().split())
+dx, dy = (-1, 0, 1, 0), (0, 1, 0, -1)
+board = [list(map(int, input().split())) for _ in range(i)]
+dirty = [[1]*j for _ in range(i)]
+a = 0
+ans = 0
+while True:
+    if dirty[x][y]:
+        dirty[x][y] = 0
+        ans += 1
+    while a < 4:
+        d = (d-1) % 4
+        a += 1
+        nx, ny = x+dx[d], y+dy[d]
+        if not board[nx][ny] and dirty[nx][ny]:
+            x, y = nx, ny
+            a = 0
+            break
+    else:
+        nx, ny = x-dx[d], y-dy[d]
+        if not board[nx][ny]:
+            x, y = nx, ny
+            a = 0
+        else:
+            print(ans)
+            break
