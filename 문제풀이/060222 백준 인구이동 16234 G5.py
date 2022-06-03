@@ -112,13 +112,13 @@ while True:
                             grouping[nx][ny] = cur
                             totals[cur][0] += 1
                             totals[cur][1] += board[nx][ny]
-    isMoved = True
+    isStuck = True
     for i in range(n):
         for j in range(n):
             num, total = totals[grouping[i][j]]
-            isMoved = isMoved and board[i][j] == total//num
+            isStuck = isStuck and board[i][j] == total//num
             board[i][j] = total//num
-    if isMoved:
+    if isStuck:
         print(t)
         break
     t += 1
