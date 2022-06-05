@@ -22,22 +22,23 @@ A와 B의 길이는 같습니다.
 A와 B의 길이는 1 이상 100,000 이하입니다.
 A와 B의 각 원소는 1 이상 1,000,000,000 이하의 자연수입니다.
 '''
-import collections
 
-
-def solution(A, B):
+def solution(A: list[int], B: list[int]) -> int:
+    # A는 이대로 출전함
+    # B팀은 승점이 가장 높도록 함.
+    n = len(A)
+    point = 0
     A.sort()
-    B = collections.deque(sorted(B))
-    score1 = 0
-    score2 = 0
-    for i in range(len(A)):
-        if B[i] > A[i]:
-            score1 += 1
-    B.append(B.popleft())
-    for i in range(len(A)):
-        if B[i] > A[i]:
-            score2 += 1
-    return max(score1, score2)
+    B.sort()
+    a, b = 0, 0
+    while a < n and b < n:
+        if  A[a] >= B[b]:
+            b += 1
+        else:
+            point += 1
+            a += 1
+            b += 1
+    return point
 
 
 solution([5, 1, 3, 7], [2, 2, 6, 8])
