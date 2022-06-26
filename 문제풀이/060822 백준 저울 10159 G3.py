@@ -94,3 +94,6 @@ for each in range(1, weights+1):
         if consequence[each][i]:
             temp -= 1
     print(temp)
+
+# 플루이드 워셜 알고리즘을 쓸 수 있다.
+# 해당 경로까지 갈 수 있다는 것은, 여러번의 비교를 통해 이것이 더 무겁다고 알 수 있는 것이다.
