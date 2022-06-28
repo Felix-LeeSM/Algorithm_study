@@ -39,10 +39,12 @@ Q개의 질문에 대한 T의 최솟값을 출력한다.
 '''
 # https://www.acmicpc.net/problem/23034
 
-import sys
-input = sys.stdin.readline
+import collections
+
+
 n, m = map(int, input().split())
-board = [[float('inf')]*(n+1) for _ in range(n+1)]
+board = [[0]*(n+1) for _ in range(n+1)]
+linked = [[] for _ in range(n+1)]
 parents = list(range(n+1))
 lines = []
 q = []
@@ -74,18 +76,24 @@ for _ in range(int(input())):
     x, y = map(int, input().split())
     q.append((x, y))
 
-for k in range(1, n+1):
-    for i in range(1, n+1):
-        for j in range(1, n+1):
-            board[i][j] = board[j][i] = min(
-                board[i][k]+board[k][j], board[i][j])
 
 for d, n1, n2 in lines:
     if getP(n1) != getP(n2):
+        linked[n1].append((n2, d))
+        linked[n2].append((n1, d))
         uniP(n1, n2)
         cost += d
 
 for p1, p2 in q:
-    print(cost-board[p1][p2])
-
-    # p1이랑 p2가 연결이 안 되어 있는 경우?
+    queue = collections.deque([(p1, 0)])
+    visited = [0]*(n+1)
+    visited[p1] = 1
+    while queue:
+        node, maximum = queue.popleft()
+        if node == p2:
+            break
+        for another, dist in linked[node]:
+            if not visited[another]:
+                queue.append((another, max(maximum, dist)))
+                visited[another] = 1
+    print(cost-maximum)
