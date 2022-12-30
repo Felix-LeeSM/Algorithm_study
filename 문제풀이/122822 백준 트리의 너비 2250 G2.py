@@ -71,17 +71,15 @@ RIGHT = 1
 def solution():
     NODES = int(input())
     graph = [[] for _ in range(NODES+1)]
-    childs = set()
+    root_set = set(range(1, NODES+1))
     for _ in range(NODES):
         p, l, r = map(int, input().split())
         graph[p] = [l, r]
-        childs.add(l)
-        childs.add(r)
+        root_set.discard(l)
+        root_set.discard(r)
 
-    root = [i for i in range(1, NODES+1) if i not in childs][0]
+    root = root_set.pop()
 
-    global width
-    width = 1
 
     extremes = [i for i in get_widest(
         root, graph, [[INF, -INF] for _ in range(NODES+1)]) if i[0] != INF]
@@ -90,19 +88,18 @@ def solution():
     return (height, right-left+1)
 
 
-def get_widest(cur, graph, boundaries, height=0):
-    global width
+def get_widest(cur, graph, boundaries, height=0, width_cont = [0]):
     left, right = graph[cur]
     if left != -1:
-        get_widest(left, graph, boundaries, height+1)
-        width += 1
+        get_widest(left, graph, boundaries, height+1, width_cont)
+        width_cont[0] += 1
 
-    boundaries[height][LEFT] = min(boundaries[height][LEFT], width)
-    boundaries[height][RIGHT] = max(boundaries[height][RIGHT], width)
+    boundaries[height][LEFT] = min(boundaries[height][LEFT], width_cont[0])
+    boundaries[height][RIGHT] = max(boundaries[height][RIGHT], width_cont[0])
 
     if right != -1:
-        width += 1
-        get_widest(right, graph, boundaries, height+1)
+        width_cont[0] += 1
+        get_widest(right, graph, boundaries, height+1, width_cont)
 
     return boundaries
 
