@@ -27,9 +27,9 @@ def solution(nodes, graph):
     def dfs(node):
         nonlocal D, G, visited
 
-        childs = len(graph[node])
-        if childs >= 3:
-            G += childs * (childs-1) * (childs-2) // 6
+        children = len(graph[node])
+        if children >= 3:
+            G += combination_3(children)
 
         for child in graph[node]:
             if visited[child]:
@@ -38,8 +38,8 @@ def solution(nodes, graph):
             visited[child] = True
             dfs(child)
 
-            if childs >= 2 and len(graph[child]) >= 2:
-                D += (childs-1) * (len(graph[child])-1)
+            if children >= 2 and len(graph[child]) >= 2:
+                D += (children-1) * (len(graph[child])-1)
     D = G = 0
     root = 1
 
@@ -52,6 +52,10 @@ def solution(nodes, graph):
     if D > 3*G:
         return 'D'
     return 'DUDUDUNGA'
+
+
+def combination_3(n):
+    return n * (n-1) * (n-2) // 6
 
 
 main()
