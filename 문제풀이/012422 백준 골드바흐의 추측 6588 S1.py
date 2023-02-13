@@ -1,24 +1,34 @@
-# is_prime 함수가 불안하긴 하다. 
-# 다만, 6 이상의 짝수만 들어오므로 그냥 이용함.
-# 입력은 짝수만 들어오고, 2를 포함하는 경우는 다른 수도 짝수가 되어야 하므로 2는 무시한다.
-# for i in range(3, n, 2)에서 간격을 2로 둔다.
-
-
-
 import sys
+input = sys.stdin.readline
 
-def is_prime(num):
-    for k in range(2, int(num**0.5+1)):
-        if not num%k:
-            return False
-    else:
-        return True
 
-while True:
-    n = int(sys.stdin.readline())
-    if not n:
-        break
-    for i in range(3, n, 2):
-        if is_prime(i) and is_prime(n-i):
-            print('{0} = {1} + {2}'.format(n, i, n-i))
+def make_sieve(n: int) -> list[bool]:
+    sieve = [0] * 2 + [1] * (n - 1)
+    for k in range(2, int(n ** 0.5 + 1.5)):
+        if sieve[k]:
+            sieve[k*2::k] = [0] * ((n - k) // k)
+    return sieve
+
+
+def main() -> int:
+    sieve = make_sieve(1000000)
+    primes = [i for i, j in enumerate(sieve) if j]
+    while True:
+        n = int(input())
+        if not n:
             break
+
+        for i in range(1, len(primes)):
+            prime = primes[i]
+            if prime >= n:
+                print('Goldbach\'s conjecture is wrong.')
+                break
+
+            if sieve[n-prime]:
+                print(f'{n} = {prime} + {n-prime}')
+                break
+
+    return 1
+
+
+main()
