@@ -50,6 +50,7 @@ KOI 준비를 위해 회의를 개최하려 한다.
 4
 8
 '''
+'''
 INF = float('inf')
 n = int(input())
 e = int(input())
@@ -91,3 +92,70 @@ for k in range(len(temp)):
 print(len(temp))
 for i in sorted(reps):
     print(i)
+'''
+
+from collections import defaultdict
+from itertools import islice, permutations, product
+from sys import argv, stdin
+input = stdin.readline
+
+
+def solution(N: int, edges: map):
+    def getP(a):
+        x = a
+        while p[x] != x:
+            x = p[x]
+        p[a] = x
+        return x
+
+    def uniP(a, b):
+        a, b = getP(a), getP(b)
+        if a > b:
+            p[a] = b
+        else:
+            p[b] = a
+
+    p = list(range(N+1))
+    floyd = [[1e9]*(N+1) for _ in range(N+1)]
+    for i in range(1, N+1):
+        floyd[i][i] = 0
+
+    for a, b in edges:
+        uniP(a, b)
+        floyd[a][b] = floyd[b][a] = 1
+
+    committees = defaultdict(list)
+    for member, committee in enumerate(map(getP, islice(p, 1, None)), 1):
+        committees[committee].append(member)
+
+    reprs = []
+    for members in committees.values():
+        if len(members) <= 2:
+            reprs.append(members[0])
+            continue
+
+        for k, i, j in permutations(members, 3):
+            if floyd[i][j] > floyd[i][k] + floyd[k][j]:
+                floyd[i][j] = floyd[i][k] + floyd[k][j]
+
+        maxes = {i: 0 for i in members}
+        for i, j in product(members, repeat=2):
+            if maxes[i] < floyd[i][j]:
+                maxes[i] = floyd[i][j]
+
+        reprs.append(sorted(maxes.items(), key=lambda x: x[-1])[0][0])
+
+    return [len(committees), *sorted(reprs)]
+
+
+def main(args=argv) -> int:
+    N = int(input())
+    edges = [tuple(map(int, input().split())) for _ in range(int(input()))]
+
+    print(*solution(N, edges), sep='\n')
+
+    return 1
+
+
+if __name__ == '__main__':
+    main()
