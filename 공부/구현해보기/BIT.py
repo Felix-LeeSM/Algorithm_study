@@ -35,6 +35,7 @@ class BIT:
         return self._accumulate(end) - self._accumulate(start-1)
 
 
+N = 100
 arr = array('l', repeat(0, N+1))
 tree = array('l', repeat(0, N+1))
 ret = []
@@ -58,11 +59,3 @@ def query(start, end):
     if end < start:
         return query(end, start)
     return accum(end) - accum(start-1)
-
-
-for type, a, b in queries:
-    if type == UPDATE:
-        update(a, b)
-
-    elif type == QUERY:
-        print(query(a, b))

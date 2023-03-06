@@ -117,6 +117,7 @@ Knight: We seek the holy grail . . .
 Taunter: (A childish hand gesture). 
 Taunter: Your godfather was a parrot.
 '''
+from itertools import cycle
 from sys import argv, stdin
 input = stdin.readline
 
