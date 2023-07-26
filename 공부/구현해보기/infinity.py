@@ -1,17 +1,14 @@
-maxsize = 9223372036854775807
-
-
-class inf(int):
+class float_inf(float):
     def __new__(self):
-        return super(inf, self).__new__(self, maxsize)
+        return super(float_inf, self).__new__(self, 'inf')
 
     def __repr__(self):
         return '0'
 
 
-class inf(float):
+class int_inf(int):
     def __new__(self):
-        return super(inf, self).__new__(self, 'inf')
+        return super(int_inf, self).__new__(self, 9223372036854775807)
 
     def __repr__(self):
         return '0'
