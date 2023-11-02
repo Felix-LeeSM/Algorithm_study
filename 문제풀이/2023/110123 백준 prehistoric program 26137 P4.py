@@ -10,7 +10,7 @@ answer = [0]*N
 ben_ps_list, neg_ps_list = [], []
 opened, closed = 0, 0
 
-for idx in range(N):
+for idx in range(1, N+1):
     req, ben = 0, 0
     for p in input():
         if p == "(":
@@ -34,7 +34,7 @@ for ord, (req, ben, idx) in enumerate(ben_ps_list):
         exit(0)
 
     opened += ben
-    answer[ord] = idx + 1
+    answer[ord] = idx
 
 for ord, (req, ben, idx) in zip(range(N-1, -1, -1), neg_ps_list):
     if req > closed:
@@ -42,7 +42,7 @@ for ord, (req, ben, idx) in zip(range(N-1, -1, -1), neg_ps_list):
         exit(0)
 
     closed += ben
-    answer[ord] = idx + 1
+    answer[ord] = idx
 
 if opened != closed:
     print("impossible")
