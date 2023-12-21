@@ -1,6 +1,5 @@
 // https://www.acmicpc.net/problem/17071
 use std::collections::{HashSet, VecDeque};
-use std::io::{self};
 
 fn input() -> VecDeque<Vec<usize>> {
     io::read_to_string(io::stdin())
