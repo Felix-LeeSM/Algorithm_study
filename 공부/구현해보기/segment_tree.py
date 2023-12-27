@@ -24,6 +24,7 @@ class Segment_Tree:
         else:
             code = TypeCode[type][0] if signed else TypeCode[type][1]
 
+        self.init = False
         self.neutral = neutral_num
         self.merge = merge
         self.type_code = code
@@ -75,4 +76,10 @@ class Segment_Tree:
                 end -= 1
             start //= 2
             end //= 2
+
         return answer
+
+
+tree = Segment_Tree()
+tree.init_tree(3, [1, 2, 3])
+print(tree.tree)

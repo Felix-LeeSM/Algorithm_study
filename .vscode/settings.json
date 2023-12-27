@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'std_rust'",
+      "cargo": {
+        "args": ["build", "--bin=std_rust", "--package=std_rust"],
+        "filter": {
+          "name": "std_rust",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'std_rust'",
+      "cargo": {
+        "args": ["test", "--no-run", "--bin=std_rust", "--package=std_rust"],
+        "filter": {
+          "name": "std_rust",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  }
+}
