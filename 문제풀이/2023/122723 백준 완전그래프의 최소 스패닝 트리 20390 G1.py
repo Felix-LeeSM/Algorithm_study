@@ -42,7 +42,6 @@ for _ in range(n-1):
             min_dist = distances[next]
             min_dist_idx = next
 
-    connected[min_dist_idx] = True
     last_connected = min_dist_idx
     answer += min_dist
 
