@@ -7,11 +7,11 @@
     {
       "type": "lldb",
       "request": "launch",
-      "name": "Debug executable 'Algorithm_study'",
+      "name": "Debug executable 'algorithm_study'",
       "cargo": {
-        "args": ["build", "--bin=Algorithm_study", "--package=Algorithm_study"],
+        "args": ["build", "--bin=algorithm_study", "--package=algorithm_study"],
         "filter": {
-          "name": "Algorithm_study",
+          "name": "algorithm_study",
           "kind": "bin"
         }
       },
@@ -21,11 +21,11 @@
     {
       "type": "lldb",
       "request": "launch",
-      "name": "Debug unit tests in executable 'Algorithm_study'",
+      "name": "Debug unit tests in executable 'algorithm_study'",
       "cargo": {
-        "args": ["test", "--no-run", "--bin=Algorithm_study", "--package=Algorithm_study"],
+        "args": ["test", "--no-run", "--bin=algorithm_study", "--package=algorithm_study"],
         "filter": {
-          "name": "Algorithm_study",
+          "name": "algorithm_study",
           "kind": "bin"
         }
       },
