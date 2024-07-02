@@ -2,41 +2,42 @@ from array import array
 from itertools import chain, repeat
 from _collections_abc import Iterable
 
-['b', 'B', 'h', 'H', 'i', 'I', 'l', 'L', 'q', 'Q', 'f', 'd']
-TypeCode = {
-    'char': ('b', 'B'),
-    'short': ('h', 'H'),
-    'int': ('i', 'I'),
-    'long': ('l', 'L'),
-    'long long': ('q', 'Q'),
-    'float': 'f',
-    'double': 'd'
-}
-
 
 class Segment_Tree:
+    TypeCode = {
+        'char': ('b', 'B'),
+        'short': ('h', 'H'),
+        'int': ('i', 'I'),
+        'long': ('l', 'L'),
+        'long long': ('q', 'Q'),
+        'float': 'f',
+        'double': 'd'
+    }
+
     def __init__(self, merge=lambda x, y: x+y, neutral_num=0, signed=True, type='long'):
-        if type not in TypeCode:
+        if type not in self.TypeCode:
             raise ValueError(
-                f'Invalid type: {type}, valid types: {TypeCode.keys()}')
+                f'Invalid type: {type}, valid types: {self.TypeCode.keys()}')
+
         if type in ['float', 'double']:
-            code = TypeCode[type]
+            code = self.TypeCode[type]
         else:
-            code = TypeCode[type][0] if signed else TypeCode[type][1]
+            code = self.TypeCode[type][0] if signed else self.TypeCode[type][1]
 
         self.init = False
         self.neutral = neutral_num
         self.merge = merge
         self.type_code = code
 
-    def init_tree(self, size: int, nums: Iterable):
+    def init_tree(self, nums: Iterable):
         if self.init:
             raise RuntimeError('Tree already initialized')
         self.init = True
-        self.size = size
-        self.tree = tree = array(self.type_code, chain(repeat(0, size), nums))
+        self.size = len(nums)
+        self.tree = tree = array(
+            self.type_code, chain(repeat(self.neutral, self.size), nums))
 
-        for i in range(size-1, 0, -1):
+        for i in range(self.size-1, 0, -1):
             tree[i] = self.merge(self.tree[2*i], self.tree[2*i+1])
 
     def update(self, idx: int, val):
@@ -45,41 +46,57 @@ class Segment_Tree:
 
         tree = self.tree
 
-        idx += self.size-1
+        idx += self.size
         tree[idx] = val
         idx //= 2
 
-        while idx:
+        while idx > 0:
             tree[idx] = self.merge(tree[2*idx], tree[2*idx+1])
             idx //= 2
 
     # input index starts from 1
-    def query(self, start: int, end: int, neutral=None):
+    def query(self, start: int, end: int):
         if not self.init:
             raise RuntimeError('Tree not initialized')
         if start > end:
-            return self.query(end, start)
+            raise RuntimeError(
+                'start index must be greater than or equal to end index')
 
         tree = self.tree
-        start += self.size-1
-        end += self.size-1
-        answer = neutral
-        if neutral is None:
-            answer = self.neutral
+        start = start + self.size
+        end = end + self.size
+        answer = self.neutral
 
         while start <= end:
-            if start % 2:
+            if start % 2 == 1:
                 answer = self.merge(answer, tree[start])
                 start += 1
-            if not end % 2:
+            if end % 2 == 0:
                 answer = self.merge(answer, tree[end])
                 end -= 1
+
             start //= 2
             end //= 2
 
         return answer
 
 
-tree = Segment_Tree()
-tree.init_tree(3, [1, 2, 3])
-print(tree.tree)
+if __name__ == '__main__':
+    tree = Segment_Tree()
+    tree.init_tree([1, 2, 3])
+
+    assert tree.query(0, 0) == 1
+    assert tree.query(0, 1) == 3
+    assert tree.query(0, 2) == 6
+    assert tree.query(1, 1) == 2
+    assert tree.query(1, 2) == 5
+    assert tree.query(2, 2) == 3
+
+    tree.update(1, 4)
+
+    assert tree.query(0, 0) == 1
+    assert tree.query(0, 1) == 5
+    assert tree.query(0, 2) == 8
+    assert tree.query(1, 1) == 4
+    assert tree.query(1, 2) == 7
+    assert tree.query(2, 2) == 3
